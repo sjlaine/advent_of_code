@@ -37,17 +37,6 @@ int main() {
       }
     }
 
-    // 0 199  A
-    // 1 200  A B
-    // 2 208  A B C
-    // 3 210    B C D mod == 3
-    // 4 200  E   C D mod == 0
-    // 5 207  E F   D mod == 1
-    // 6 240  E F G   mod == 2
-    // 7 269    F G H mod == 3
-    // 8 260      G H mod == 0
-    // 9 263        H mod == 1
-
     if (linenum == 0) {
       numsA[0] = num;
     }
@@ -120,7 +109,6 @@ int main() {
         }
       }
     }
-
 
     prev = atoi(line);
     linenum += 1;
