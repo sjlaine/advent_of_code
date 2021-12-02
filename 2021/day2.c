@@ -31,6 +31,7 @@ int main() {
 
   int horiz = 0;
   int depth = 0;
+  int aim = 0;
 
   while ((read = getline(&line, &len, fptr)) != -1) {
     int space_idx = find_idx(' ', line);
@@ -38,14 +39,15 @@ int main() {
     int value = atoi(substr(space_idx + 1, 1, line));
 
     switch(direction) {
-      case 102:
+      case 102: // 'f'
         horiz += value;
+        depth += aim * value;
         break;
-      case 117:
-        depth -= value;
+      case 117: // 'u'
+        aim -= value;
         break;
-      case 100:
-        depth += value;
+      case 100: // 'd'
+        aim += value;
         break;
       default:
         printf("unrecognized direction!!!\n");
