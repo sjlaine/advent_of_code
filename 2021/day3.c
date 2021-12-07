@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <string.h>
 
 int main() {
@@ -9,17 +10,33 @@ int main() {
 
   int digit_counts[12][2] = { 0 };
   int loop_count = 0;
+  int *arr;
+  arr = (int*)malloc(1000 * 12 * sizeof(int));
 
-  while ((read = getline(&line, &len, fptr)) != -1) {
-    for(int i = 0; i < 12; i += 1) {
-      if(line[i] == '0') {
-        digit_counts[i][0] += 1;
-      } else {
-        digit_counts[i][1] += 1;
+  if (arr == NULL) {
+        printf("Memory not allocated.\n");
+        exit(0);
+  }
+  else {
+    while ((read = getline(&line, &len, fptr)) != -1) {
+      for(int i = 0; i < 12; i += 1) {
+        if(line[i] == '0') {
+          digit_counts[i][0] += 1;
+          arr[(loop_count * 12) + i] = 0;
+        } else {
+          digit_counts[i][1] += 1;
+          arr[(loop_count * 12) + i] = 1;
+        }
       }
+
+      loop_count += 1;
     }
 
-    loop_count += 1;
+    for(int i = 0; i < 1000; i++) {
+      for(int j = 0; j < 12; j++) {
+        printf("line: %d, idx: %d, val: %d\n", i, j, arr[(i * 12) + j]);
+      }
+    }
   }
 
   int gamma_rate_dec = 0;
@@ -27,7 +44,7 @@ int main() {
   int digit_in_dec = 1;
 
   for (int i = 11; i >= 0; i -= 1) {
-    if(digit_counts[i][1] > digit_counts[i][0]) {
+    if(digit_counts[i][1] >= digit_counts[i][0]) {
       gamma_rate_dec += digit_in_dec;
     } else {
       epsilon_rate_dec += digit_in_dec;
@@ -38,6 +55,23 @@ int main() {
 
   printf("gamma_rate: %d, epsilon_rate: %d\n", gamma_rate_dec, epsilon_rate_dec);
   printf("power consumption: %d\n", gamma_rate_dec * epsilon_rate_dec);
+
+  // Part 2
+  int filtered_nums[1000];
+  int iter = 0;
+
+  while(1) {
+    int lines1[1000];
+    int lines2[1000];
+
+    for(int i = 0; i < (sizeof(arr) / sizeof(arr[0])); i++) {
+      // count most common digit
+
+      // filter ones without that most common digit
+    }
+
+    iter++;
+  }
 
   return 0;
 }
