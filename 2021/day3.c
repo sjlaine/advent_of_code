@@ -56,23 +56,6 @@ int main() {
   printf("gamma_rate: %d, epsilon_rate: %d\n", gamma_rate_dec, epsilon_rate_dec);
   printf("power consumption: %d\n", gamma_rate_dec * epsilon_rate_dec);
 
-  // Part 2
-  int filtered_nums[1000];
-  int iter = 0;
-
-  while(1) {
-    int lines1[1000];
-    int lines2[1000];
-
-    for(int i = 0; i < (sizeof(arr) / sizeof(arr[0])); i++) {
-      // count most common digit
-
-      // filter ones without that most common digit
-    }
-
-    iter++;
-  }
-
   return 0;
 }
 

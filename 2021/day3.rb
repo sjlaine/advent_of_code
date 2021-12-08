@@ -1,5 +1,6 @@
 #!/usr/bin/env ruby
 
+# Day 3, Part 2
 def most_common_at_idx(arr, idx)
   counts = [0, 0]
 
@@ -57,7 +58,3 @@ def find_scrubber_rating
 end
 
 find_scrubber_rating
-
-
-# "oxygen_gen: 101101100111, co2_gen: 011111010101"
-# 2919 * 2005
