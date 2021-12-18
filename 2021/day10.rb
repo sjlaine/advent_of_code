@@ -24,7 +24,7 @@ def test_chunk(chunk:)
     '<': '>'
   }
 
-  scores = {
+  part1_scores = {
     ')': 3,
     '}': 1197,
     ']': 57,
@@ -44,19 +44,63 @@ def test_chunk(chunk:)
     elsif tested.last && (pairs[tested.last.to_sym] == char)
       tested.pop
     else
-      puts "invalid! score: #{scores[char.to_sym]}"
-      return scores[char.to_sym]
+      return { part1: part1_scores[char.to_sym], part2: nil }
     end
   end
 
-  0
+  { part1: 0, part2: tested }
 end
 
 chunks = parse_input
-score = 0
+part1_score = 0
+incomplete = []
 
 chunks.each do |chunk|
-  score += test_chunk(chunk: chunk)
+  res = test_chunk(chunk: chunk)
+  part1_score += res[:part1]
+  incomplete << res[:part2]
 end
 
-puts "total score: #{score}"
+def autocomplete_score(char)
+  pairs = {
+    '(': ')',
+    '{': '}',
+    '[': ']',
+    '<': '>'
+  }
+
+  autocomplete_scores = {
+    ')': 1,
+    ']': 2,
+    '}': 3,
+    '>': 4
+  }
+
+  autocomplete_scores[pairs[char.to_sym].to_sym]
+end
+
+part2_scores = []
+
+incomplete.compact.each do |inc|
+  line_score = 0
+
+  inc.reverse.each do |char|
+    line_score *= 5
+    line_score += autocomplete_score(char)
+  end
+
+  part2_scores << line_score
+end
+
+puts "part 1 score: #{part1_score}"
+
+part2_scores = part2_scores.sort
+length = part2_scores.length
+middle = length * 0.5
+middle_idx = middle.ceil - 1
+
+puts "part 2 scores length: #{length}"
+puts "part 2 scores: #{part2_scores}"
+puts "part 2 scores middle idx: #{middle_idx}"
+puts "middle score: #{part2_scores[middle_idx]}"
+
