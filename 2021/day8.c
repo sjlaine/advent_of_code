@@ -23,22 +23,30 @@ int find_idx(char needle, char * haystack) {
   return -1;
 }
 
-char * strdiff(str1, str2, length) {
-  char * diff = malloc(sizeof(char*) * (length + 1));
+char * strdiff(char * str1, char * str2, int len1, int len2, int difflen) {
+  char * diff = malloc(sizeof(char*) * (difflen + 1));
+  int count = 0;
+  diff[difflen] = '\0';
 
-  for(int i = 0; i < strlen(str1); i++) {
-    int found = 0;
+  while(difflen > 0) {
+    for(int i = 0; i < len1; i++) {
+      int found = 0;
 
-    for(int j = 0; j < strlen(str2), j++) {
-      if(str2[j] == str1[i]) {
-        found = 1;
+      for(int j = 0; j < len2; j++) {
+        if(str2[j] == str1[i]) {
+          found = 1;
+        }
+      }
+
+      if(found == 0) {
+        diff[count] = str1[i];
       }
     }
 
-    if(found == 0) {
-      strncat(diff, str1[i], 1);
-    }
+    difflen--;
   }
+
+  return diff;
 }
 
 int main() {
@@ -108,17 +116,15 @@ int main() {
     printf("segment len %d: %s\n", i, segments[i]);
   }
 
-  char * topright,
-         bottomright,
-         middle,
-         top,
+  char * middle,
          bottom,
          topleft,
          bottomleft;
 
-  topright = segments[2];
-  bottomright = segments[2];
-  top = strdiff(segments[3], segments[2], 1);
+  char * top = strdiff(segments[3], segments[2], 3, 2, 1);
+  char * tlmiddle = strdiff(segments[4], segments[2], 4, 2, 2);
+
+  printf("top: %s, topleft/middle: %s\n", top, tlmiddle);
 
   return 0;
 }
