@@ -7,7 +7,7 @@ def sum_priorities
   sum = 0
 
   KNAPSACKS.each do |knapsack|
-    item = item_in_both(split_halves(knapsack.chomp))
+    item = item_in_all(split_halves(knapsack.chomp))
 
     sum += priority(item)
   end
@@ -35,19 +35,8 @@ def priority(letter)
   LETTERS.index(letter) + 1
 end
 
-def item_in_both(sides)
-  shared = sides[0] & sides[1]
-
-  raise 'more than one common item!' unless shared.length == 1
-  shared.first
-end
-
 def item_in_all(sacks)
-  sack0 = sacks[0]
-  sack1 = sacks[1]
-  sack2 = sacks[2]
-
-  shared = sack0 & sack1 & sack2
+  shared = sacks.reduce(:&)
 
   raise 'more than one common item!' unless shared.length == 1
   shared.first
